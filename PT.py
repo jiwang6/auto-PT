@@ -23,23 +23,15 @@ def get_questions(url):
 
 
 def send_answers(url, name_string = '1st Lt, Wang, Jim', exercise_string = 'hacking', month = None, day = None, year = None):
-    # get current day
-
-
-
-    m_string = '04' 
-    d_string = '01'
-    y_string = '2024'
-    
     ids = [
         'entry.10432257', # name
         'entry.353385772_month',
-        'entry.353385772_day'
+        'entry.353385772_day',
         'entry.353385772_year',
         'entry.1518571388' # exercise
     ]
 
-    answers = [name_string, m_string, d_string, y_string, exercise_string]
+    answers = [name_string, month, day, year, exercise_string]
     
     response = dict(zip(ids, answers))
     
@@ -84,14 +76,12 @@ exercise = "lifting"
 
 #print(send_answers(url, ranklastfirst, exercise))
 
-month, day, year = map(int, str(datetime.datetime.now()).split(' ')[0].split('-'))
-
 for i in range (2):
     if i == 0:
-        month, day, year = map(int, str(datetime.datetime.now()).split(' ')[0].split('-'))
+        year, month, day = map(int, str(datetime.datetime.now()).split(' ')[0].split('-'))
     else:
         # get tomorrow's date
         tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
-        month, day, year = map(int, str(tomorrow).split(' ')[0].split('-'))
+        year, month, day = map(int, str(tomorrow).split(' ')[0].split('-'))
 
     print(send_answers(url, ranklastfirst, exercise, month, day, year))
